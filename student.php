@@ -38,6 +38,14 @@ class student extends adb {
         return $this->fetch();
     }
 
+    function get_parent_phone_by_student($student){
+      $str_query="select phone_number from mwc_quizzine_student, mwc_quizzine_parent where mwc_quizzine_student.username='$student'";
+        if(!$this->query($str_query)){
+            return false;
+        }
+        return $this->fetch();
+    }
+
 }
 
 
