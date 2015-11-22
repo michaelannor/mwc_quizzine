@@ -22,6 +22,21 @@ class student extends adb {
         return $this->query($str_query);
     }
 
+    function get_parent($username){
+      $str_query="select parent from mwc_quizzine_student where username='$username'";
+        if(!$this->query($str_query)){
+            return false;
+        }
+        return $this->fetch();
+    }
+
+    function get_students_by_parent($parent){
+      $str_query="select username from mwc_quizzine_student where parent='$parent'";
+        if(!$this->query($str_query)){
+            return false;
+        }
+        return $this->fetch();
+    }
 
 }
 
