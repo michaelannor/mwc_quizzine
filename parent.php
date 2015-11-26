@@ -8,7 +8,7 @@
 
 include_once ("adb.php");
 
-class student extends adb {
+class parent extends adb {
 
   /**
    * description: The add_parent function adds a parent record

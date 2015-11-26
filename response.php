@@ -87,23 +87,92 @@
 
 // cmd1
   function add_student_cmd(){
-    # code...
+    include ("student.php");
+    $user = $_REQUEST['user'];
+    $password = $_REQUEST['pass'];
+    $parent = $_REQUEST['parent'];
+    $obj = new student();
+
+    if($obj->add_student($user, $password, $parent)){
+        echo '{"result":1,"message": "added successfully"}';
+    }else{
+        echo '{"result":0,"message": "transaction not added."}';
+    }
   }
 // cmd2
   function get_parent_cmd(){
-    # code...
+    include ("student.php");
+    $user = $_REQUEST['user'];
+    $obj = new student();
+
+    $row = $obj->get_parent($user);
+    //return a JSON string to browser when request comes to get description
+
+    if($row){
+    //generate the JSON message to echo to the browser
+      echo '{"result":1,"parent":[';	//start of json object
+      echo json_encode($row);			//convert the result array to json object
+      echo "]}";							//end of json array and object
+    }
+    else{
+      echo '{"result":0,"message": "parent not in database."}';
+    }
   }
 // cmd3
   function get_students_by_parent_cmd(){
-    # code...
+    include ("student.php");
+    $obj = new student();
+
+    $row = $obj->get_students_by_parent();
+    if ($row){
+    //return a JSON string to browser when request comes to get description
+    //generate the JSON message to echo to the browser
+      echo '{"result":1,"student":[';	//start of json object
+      while($row){
+      echo json_encode($row);			//convert the result array to json object
+      $row=$obj->fetch();
+      if ($row){
+        echo ",";
+      }
+    }
+      echo "]}";							//end of json array and object
+    }
+    else{
+      echo '{"result":0,"message": "students not got."}';
+    }
   }
 // cmd4
   function get_parent_phone_by_student_cmd(){
-    # code...
+    include ("student.php");
+    $user = $_REQUEST['user'];
+    $obj = new student();
+
+    $row = $obj->get_parent_phone_by_student_cmd($user);
+    //return a JSON string to browser when request comes to get description
+
+    if($row){
+    //generate the JSON message to echo to the browser
+      echo '{"result":1,"parentphone":[';	//start of json object
+      echo json_encode($row);			//convert the result array to json object
+      echo "]}";							//end of json array and object
+    }
+    else{
+      echo '{"result":0,"message": "parentphone not in database."}';
+    }
   }
   // cmd5
 function add_parent_cmd(){
-  # code...
+  include ("parent.php");
+  $user = $_REQUEST['user'];
+  $password = $_REQUEST['pass'];
+  $phone = $_REQUEST['phone'];
+  $obj = new parent();
+
+  if($obj->add_student($user, $password, $parent)){
+      echo '{"result":1,"message": "added successfully"}';
+  }else{
+      echo '{"result":0,"message": "transaction not added."}';
+  }
 }
   // cmd6
   function add_teacher_cmd(){
