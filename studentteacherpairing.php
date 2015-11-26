@@ -15,7 +15,7 @@ class score extends adb {
    * @param varchar $username the parent's username for login
    * @param varchar $password the parent's password for login
    */
-    function add_stp($student, $teacher){
+    function add_s_t_pair($student, $teacher){
       $str_query="insert into mwc_quizzine_student_teacher set student_id='$student', teacher_id='$teacher'";
         return $this->query($str_query);
     }
