@@ -8,7 +8,7 @@
 
 include_once ("adb.php");
 
-class score extends adb {
+class stp extends adb {
 
   /**
    * description: The add_parent function adds a parent record

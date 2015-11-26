@@ -333,47 +333,212 @@ function add_parent_cmd(){
   }
   // cmd15
   function add_question_cmd(){
-    # code...
+    include ("question.php");
+    $quiz = $_REQUEST['quiz'];
+    $questiontext = $_REQUEST['questiontext'];
+    $a = $_REQUEST['a'];
+    $b = $_REQUEST['b'];
+    $c = $_REQUEST['c'];
+    $d = $_REQUEST['d'];
+    $answer = $_REQUEST['ans'];
+    $obj = new question();
+
+    if($obj->add_question($quiz, $questiontext, $a, $b, $c, $d, $answer)){
+        echo '{"result":1,"message": "added successfully"}';
+    }else{
+        echo '{"result":0,"message": "question not added."}';
+    }
   }
   // cmd16
   function get_questions_by_quiz_cmd(){
-    # code...
+    $quiz=$_REQUEST['quiz'];
+    include ("question.php");
+    $obj = new question();
+
+    $row = $obj->get_questions_by_quiz($quiz);
+    if ($row){
+    //return a JSON string to browser when request comes to get description
+    //generate the JSON message to echo to the browser
+      echo '{"result":1,"question":[';	//start of json object
+      while($row){
+      echo json_encode($row);			//convert the result array to json object
+      $row=$obj->fetch();
+      if ($row){
+        echo ",";
+      }
+    }
+      echo "]}";							//end of json array and object
+    }
+    else{
+      echo '{"result":0,"message": "questions not got."}';
+    }
   }
   // cmd17
   function get_answer_cmd(){
-    # code...
+    $question=$_REQUEST['question'];
+    include ("question.php");
+    $obj = new question();
+
+    $row = $obj->get_answer($question);
+    if($row){
+    //generate the JSON message to echo to the browser
+      echo '{"result":1,"answer":[';	//start of json object
+      echo json_encode($row);			//convert the result array to json object
+      echo "]}";							//end of json array and object
+    }
+    else{
+      echo '{"result":0,"message": "answer not got."}';
+    }
+
   }
   // cmd18
   function add_score_cmd(){
-    # code...
+    include ("score.php");
+    $quiz = $_REQUEST['quiz'];
+    $student = $_REQUEST['student'];
+    $score = $_REQUEST['score'];
+    $obj = new score();
+
+    if($obj->add_score($quiz, $student, $score)){
+        echo '{"result":1,"message": "added successfully"}';
+    }else{
+        echo '{"result":0,"message": "score not added."}';
+    }
   }
   // cmd19
   function get_score_by_quiz_student_cmd(){
-    # code...
+    $quiz=$_REQUEST['quiz'];
+    $student=$_REQUEST['student'];
+    include ("score.php");
+    $obj = new score();
+
+    $row = $obj->get_score_quiz_by_student($quiz, $student);
+    if($row){
+    //generate the JSON message to echo to the browser
+      echo '{"result":1,"answer":[';	//start of json object
+      echo json_encode($row);			//convert the result array to json object
+      echo "]}";							//end of json array and object
+    }
+    else{
+      echo '{"result":0,"message": "score not got."}';
+    }
   }
   // cmd20
   function get_score_quiz_by_student_cmd(){
-    # code...
+    $student=$_REQUEST['student'];
+    include ("score.php");
+    $obj = new score();
+
+    $row = $obj->get_score_quiz_by_student($student);
+    if ($row){
+    //return a JSON string to browser when request comes to get description
+    //generate the JSON message to echo to the browser
+      echo '{"result":1,"scorequiz":[';	//start of json object
+      while($row){
+      echo json_encode($row);			//convert the result array to json object
+      $row=$obj->fetch();
+      if ($row){
+        echo ",";
+      }
+    }
+      echo "]}";							//end of json array and object
+    }
+    else{
+      echo '{"result":0,"message": "scorequiz not got."}';
+    }
   }
   // cmd21
   function add_s_t_pair_cmd(){
-    # code...
+    include ("studentteacherpairing.php");
+    $student = $_REQUEST['student'];
+    $teacher = $_REQUEST['teacher'];
+    $obj = new stp();
+
+    if($obj->add_s_t_pair($student, $teacher)){
+        echo '{"result":1,"message": "added successfully"}';
+    }else{
+        echo '{"result":0,"message": "student teacher pair not added."}';
+    }
   }
   // cmd22
   function get_students_by_teacher_cmd(){
-    # code...
+    $teacher=$_REQUEST['teacher'];
+    include ("studentteacherpairing.php");
+    $obj = new score();
+
+    $row = $obj->get_students_by_teacher($teacher);
+    if ($row){
+    //return a JSON string to browser when request comes to get description
+    //generate the JSON message to echo to the browser
+      echo '{"result":1,"students":[';	//start of json object
+      while($row){
+      echo json_encode($row);			//convert the result array to json object
+      $row=$obj->fetch();
+      if ($row){
+        echo ",";
+      }
+    }
+      echo "]}";							//end of json array and object
+    }
+    else{
+      echo '{"result":0,"message": "students not got."}';
+    }
   }
   // cmd23
   function get_teachers_by_student_cmd(){
-    # code...
+    $student=$_REQUEST['student'];
+    include ("studentteacherpairing.php");
+    $obj = new stp();
+
+    $row = $obj->get_teachers_by_student($student);
+    if ($row){
+    //return a JSON string to browser when request comes to get description
+    //generate the JSON message to echo to the browser
+      echo '{"result":1,"teachers":[';	//start of json object
+      while($row){
+      echo json_encode($row);			//convert the result array to json object
+      $row=$obj->fetch();
+      if ($row){
+        echo ",";
+      }
+    }
+      echo "]}";							//end of json array and object
+    }
+    else{
+      echo '{"result":0,"message": "teachers not got."}';
+    }
   }
   // cmd24
   function get_feedback_by_student_teacher_cmd(){
-    # code...
+    $teacher=$_REQUEST['teacher'];
+    $student=$_REQUEST['student'];
+    include ("studentteacherpairing.php");
+    $obj = new stp();
+
+    $row = $obj->get_feedback_by_student_teacher($student, $teacher);
+    if($row){
+    //generate the JSON message to echo to the browser
+      echo '{"result":1,"feedback":[';	//start of json object
+      echo json_encode($row);			//convert the result array to json object
+      echo "]}";							//end of json array and object
+    }
+    else{
+      echo '{"result":0,"message": "feedback not got."}';
+    }
   }
   // cmd25
   function add_feedback_cmd(){
-    # code...
+    include ("studentteacherpairing.php");
+    $student = $_REQUEST['student'];
+    $teacher = $_REQUEST['teacher'];
+    $feedback = $_REQUEST['feedback'];
+    $obj = new stp();
+
+    if($obj->add_feedback($student, $teacher, $feedback)){
+        echo '{"result":1,"message": "added successfully"}';
+    }else{
+        echo '{"result":0,"message": "feedback not added."}';
+    }
   }
 
 ?>
