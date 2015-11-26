@@ -15,7 +15,7 @@ class quiz extends adb {
    * @param varchar $category the parent's username for login
    */
     function add_quiz($quiz, $teacher, $category){
-      $str_query="insert into mwc_quizzine_quiz set quiz_id='$category', teacher_id='$teacher', category_id='$category'";
+      $str_query="insert into mwc_quizzine_quiz set quiz_id='$quiz', teacher_id='$teacher', category_id='$category'";
         return $this->query($str_query);
     }
 

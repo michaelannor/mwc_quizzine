@@ -96,7 +96,7 @@
     if($obj->add_student($user, $password, $parent)){
         echo '{"result":1,"message": "added successfully"}';
     }else{
-        echo '{"result":0,"message": "transaction not added."}';
+        echo '{"result":0,"message": "student not added."}';
     }
   }
 // cmd2
@@ -120,10 +120,11 @@
   }
 // cmd3
   function get_students_by_parent_cmd(){
+    $parent=$_REQUEST['parent'];
     include ("student.php");
     $obj = new student();
 
-    $row = $obj->get_students_by_parent();
+    $row = $obj->get_students_by_parent($parent);
     if ($row){
     //return a JSON string to browser when request comes to get description
     //generate the JSON message to echo to the browser
@@ -166,29 +167,80 @@ function add_parent_cmd(){
   $user = $_REQUEST['user'];
   $password = $_REQUEST['pass'];
   $phone = $_REQUEST['phone'];
-  $obj = new parent();
+  $obj = new parents();
 
-  if($obj->add_student($user, $password, $parent)){
+  if($obj->add_student($user, $password, $phone)){
       echo '{"result":1,"message": "added successfully"}';
   }else{
-      echo '{"result":0,"message": "transaction not added."}';
+      echo '{"result":0,"message": "parent not added."}';
   }
 }
   // cmd6
   function add_teacher_cmd(){
-    # code...
+    include ("teacher.php");
+    $user = $_REQUEST['user'];
+    $password = $_REQUEST['pass'];
+    $obj = new teacher();
+
+    if($obj->add_teacher($user, $password)){
+        echo '{"result":1,"message": "added successfully"}';
+    }else{
+        echo '{"result":0,"message": "teacher not added."}';
+    }
   }
   // cmd7
   function add_category_cmd(){
-    # code...
+    include ("category.php");
+    $category = $_REQUEST['cat'];
+    $obj = new category();
+
+    if($obj->add_teacher($category)){
+        echo '{"result":1,"message": "added successfully"}';
+    }else{
+        echo '{"result":0,"message": "category not added."}';
+    }
   }
   // cmd8
   function get_category_by_id_cmd(){
-    # code...
+    include ("category.php");
+    $category = $_REQUEST['cat'];
+    $obj = new category();
+
+    $row = $obj->get_category_by_id($category);
+    //return a JSON string to browser when request comes to get description
+
+    if($row){
+    //generate the JSON message to echo to the browser
+      echo '{"result":1,"category":[';	//start of json object
+      echo json_encode($row);			//convert the result array to json object
+      echo "]}";							//end of json array and object
+    }
+    else{
+      echo '{"result":0,"message": "category not in database."}';
+    }
   }
   // cmd9
   function get_all_categories_cmd(){
-    # code...
+    include ("category.php");
+    $obj = new category();
+
+    $row = $obj->get_all_categories();
+    if ($row){
+    //return a JSON string to browser when request comes to get description
+    //generate the JSON message to echo to the browser
+      echo '{"result":1,"category":[';	//start of json object
+      while($row){
+      echo json_encode($row);			//convert the result array to json object
+      $row=$obj->fetch();
+      if ($row){
+        echo ",";
+      }
+    }
+      echo "]}";							//end of json array and object
+    }
+    else{
+      echo '{"result":0,"message": "categories not got."}';
+    }
   }
   // cmd10
   function FunctionName(){
@@ -196,19 +248,88 @@ function add_parent_cmd(){
   }
   // cmd11
   function add_quiz_cmd(){
-    # code...
+    include ("quiz.php");
+    $quiz = $_REQUEST['quiz'];
+    $teacher = $_REQUEST['teacher'];
+    $category = $_REQUEST['cat'];
+    $obj = new quiz();
+
+    if($obj->add_teacher($quiz, $teacher, $category)){
+        echo '{"result":1,"message": "added successfully"}';
+    }else{
+        echo '{"result":0,"message": "quiz not added."}';
+    }
   }
   // cmd12
   function get_quizzes_by_teacher_cmd(){
-    # code...
+    $teacher=$_REQUEST['teacher'];
+    include ("quiz.php");
+    $obj = new quiz();
+
+    $row = $obj->get_quizzes_by_teacher($teacher);
+    if ($row){
+    //return a JSON string to browser when request comes to get description
+    //generate the JSON message to echo to the browser
+      echo '{"result":1,"quiz":[';	//start of json object
+      while($row){
+      echo json_encode($row);			//convert the result array to json object
+      $row=$obj->fetch();
+      if ($row){
+        echo ",";
+      }
+    }
+      echo "]}";							//end of json array and object
+    }
+    else{
+      echo '{"result":0,"message": "quizzes not got."}';
+    }
   }
   // cmd13
   function get_quizzes_by_category_cmd(){
-    # code...
+    $category=$_REQUEST['category'];
+    include ("quiz.php");
+    $obj = new quiz();
+
+    $row = $obj->get_quizzes_by_category($category);
+    if ($row){
+    //return a JSON string to browser when request comes to get description
+    //generate the JSON message to echo to the browser
+      echo '{"result":1,"quiz":[';	//start of json object
+      while($row){
+      echo json_encode($row);			//convert the result array to json object
+      $row=$obj->fetch();
+      if ($row){
+        echo ",";
+      }
+    }
+      echo "]}";							//end of json array and object
+    }
+    else{
+      echo '{"result":0,"message": "quizzes not got."}';
+    }
   }
   // cmd14
   function get_all_quizes_cmd(){
-    # code...
+    include ("quiz.php");
+    $obj = new quiz();
+
+    $row = $obj->get_all_quizes();
+    if ($row){
+    //return a JSON string to browser when request comes to get description
+    //generate the JSON message to echo to the browser
+      echo '{"result":1,"quiz":[';	//start of json object
+      while($row){
+      echo json_encode($row);			//convert the result array to json object
+      $row=$obj->fetch();
+      if ($row){
+        echo ",";
+      }
+    }
+      echo "]}";							//end of json array and object
+    }
+    else{
+      echo '{"result":0,"message": "quizzes not got."}';
+    }
   }
   // cmd15
   function add_question_cmd(){

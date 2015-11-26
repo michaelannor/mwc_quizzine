@@ -14,7 +14,7 @@ class category extends adb {
    * description: The add_parent function adds a parent record
    * @param varchar $category the parent's username for login
    */
-    function add_category($username){
+    function add_category($category){
       $str_query="insert into mwc_quizzine_categories set category_name='$category'";
         return $this->query($str_query);
     }
