@@ -46,7 +46,7 @@ class stp extends adb {
        * description: The add_parent function adds a parent record
        */
         function get_feedback_by_student_teacher($student, $teacher){
-          $str_query="select feedback from mwc_quizzine_student_teacher where student_id='$student', teacher_id='$teacher'";
+          $str_query="select feedback from mwc_quizzine_student_teacher where student_id='$student' and teacher_id='$teacher'";
             if(!$this->query($str_query)){
                 return false;
             }
@@ -59,7 +59,7 @@ class stp extends adb {
          * @param varchar $password the parent's password for login
          */
           function add_feedback($student, $teacher, $feedback){
-            $str_query="update mwc_quizzine_student_teacher set feedback='$feedback' where student_id='$student', teacher_id='$teacher'";
+            $str_query="update mwc_quizzine_student_teacher set feedback='$feedback' where student_id='$student' and teacher_id='$teacher'";
               return $this->query($str_query);
           }
 

@@ -75,10 +75,10 @@
       get_teachers_by_student_cmd();
       break;
     case 24:
-      get_feedback_by_student_teacher_cmd();
+      add_feedback_cmd();
       break;
     case 25:
-      add_feedback_cmd();
+      get_feedback_by_student_teacher_cmd();
       break;
     default:
       # code...
@@ -148,7 +148,7 @@
     $user = $_REQUEST['user'];
     $obj = new student();
 
-    $row = $obj->get_parent_phone_by_student_cmd($user);
+    $row = $obj->get_parent_phone_by_student($user);
     //return a JSON string to browser when request comes to get description
 
     if($row){
@@ -169,7 +169,7 @@ function add_parent_cmd(){
   $phone = $_REQUEST['phone'];
   $obj = new parents();
 
-  if($obj->add_student($user, $password, $phone)){
+  if($obj->add_parent($user, $password, $phone)){
       echo '{"result":1,"message": "added successfully"}';
   }else{
       echo '{"result":0,"message": "parent not added."}';
@@ -194,7 +194,7 @@ function add_parent_cmd(){
     $category = $_REQUEST['cat'];
     $obj = new category();
 
-    if($obj->add_teacher($category)){
+    if($obj->add_category($category)){
         echo '{"result":1,"message": "added successfully"}';
     }else{
         echo '{"result":0,"message": "category not added."}';
@@ -254,7 +254,7 @@ function add_parent_cmd(){
     $category = $_REQUEST['cat'];
     $obj = new quiz();
 
-    if($obj->add_teacher($quiz, $teacher, $category)){
+    if($obj->add_quiz($quiz, $teacher, $category)){
         echo '{"result":1,"message": "added successfully"}';
     }else{
         echo '{"result":0,"message": "quiz not added."}';
@@ -464,7 +464,7 @@ function add_parent_cmd(){
   function get_students_by_teacher_cmd(){
     $teacher=$_REQUEST['teacher'];
     include ("studentteacherpairing.php");
-    $obj = new score();
+    $obj = new stp();
 
     $row = $obj->get_students_by_teacher($teacher);
     if ($row){
@@ -508,7 +508,7 @@ function add_parent_cmd(){
       echo '{"result":0,"message": "teachers not got."}';
     }
   }
-  // cmd24
+  // cmd25
   function get_feedback_by_student_teacher_cmd(){
     $teacher=$_REQUEST['teacher'];
     $student=$_REQUEST['student'];
@@ -526,7 +526,7 @@ function add_parent_cmd(){
       echo '{"result":0,"message": "feedback not got."}';
     }
   }
-  // cmd25
+  // cmd24
   function add_feedback_cmd(){
     include ("studentteacherpairing.php");
     $student = $_REQUEST['student'];
