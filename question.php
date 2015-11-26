@@ -2,7 +2,7 @@
 
 /**
  * author: Michael Annor
- * date: 22nd November, 2015
+ * date: 26th November, 2015
  * description: Class with queries to access the mwc_quizzine_question table
  */
 
