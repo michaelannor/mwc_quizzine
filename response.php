@@ -35,6 +35,9 @@
     case 9:
       get_all_categories_cmd();
       break;
+    case 10:
+      get_categories_by_teacher_cmd();
+      break;
     case 11:
       add_quiz_cmd();
       break;
@@ -79,6 +82,13 @@
       break;
     case 25:
       get_feedback_by_student_teacher_cmd();
+      break;
+    case 26:
+      get_quizzes_by_category_teacher_cmd();
+      break;
+    case 27:
+      login_teacher_cmd();
+      # code...
       break;
     default:
       # code...
@@ -243,8 +253,28 @@ function add_parent_cmd(){
     }
   }
   // cmd10
-  function FunctionName(){
-    # code...
+  function get_categories_by_teacher_cmd(){
+    include ("category.php");
+    $teacher = $_REQUEST['teacher'];
+    $obj = new category();
+
+    $row = $obj->get_categories_by_teacher($teacher);
+    if ($row){
+    //return a JSON string to browser when request comes to get description
+    //generate the JSON message to echo to the browser
+      echo '{"result":1,"category":[';	//start of json object
+      while($row){
+      echo json_encode($row);			//convert the result array to json object
+      $row=$obj->fetch();
+      if ($row){
+        echo ",";
+      }
+    }
+      echo "]}";							//end of json array and object
+    }
+    else{
+      echo '{"result":0,"message": "categories not got."}';
+    }
   }
   // cmd11
   function add_quiz_cmd(){
@@ -538,6 +568,56 @@ function add_parent_cmd(){
         echo '{"result":1,"message": "added successfully"}';
     }else{
         echo '{"result":0,"message": "feedback not added."}';
+    }
+  }
+
+  // cmd26
+  function get_quizzes_by_category_teacher_cmd(){
+    $category=$_REQUEST['category'];
+    $teacher=$_REQUEST['teacher'];
+    include ("quiz.php");
+    $obj = new quiz();
+
+    $row = $obj->get_quizzes_by_category_teacher($category, $teacher);
+    if ($row){
+    //return a JSON string to browser when request comes to get description
+    //generate the JSON message to echo to the browser
+      echo '{"result":1,"quiz":[';	//start of json object
+      while($row){
+      echo json_encode($row);			//convert the result array to json object
+      $row=$obj->fetch();
+      if ($row){
+        echo ",";
+      }
+    }
+      echo "]}";							//end of json array and object
+    }
+    else{
+      echo '{"result":0,"message": "quizzes not got."}';
+    }
+
+  }
+
+  //cmd27
+  function login_teacher_cmd(){
+    $username=$_REQUEST['username'];
+    $password=$_REQUEST['password'];
+    include ("teacher.php");
+    $obj = new teacher();
+
+    // $row = ;
+    if($obj->login_teacher($username, $password)){
+      $row = $obj->fetch();
+      // echos $row;
+      if ($row['username'] == false){
+        echo '{"result":0,"message": "wrong login credentials."}';
+      }else if ($row['username'] == true) {
+        //generate the JSON message to echo to the browser
+          echo '{"result":1,"username":';	//start of json object
+          echo json_encode($row['username']);			//convert the result array to json object
+          echo "}";							//end of json array and object
+      }
+
     }
   }
 

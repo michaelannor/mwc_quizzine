@@ -42,6 +42,20 @@ class category extends adb {
             return $this->fetch();
         }
 
+        /**
+         * description: The add_parent function adds a parent record
+         */
+          function get_categories_by_teacher($teacher){
+            // $str_query="Select distinct category_name from mwc_quizzine_categories c inner join mwc_quizzine_quiz q on c.category_id = q.category_id where q.teacher_id = '$teacher' ORDER BY category_name ASC";
+            $str_query="Select distinct category_id from mwc_quizzine_quiz q where q.teacher_id = '$teacher' ORDER BY category_id ASC";
+              if(!$this->query($str_query)){
+                  return false;
+              }
+              return $this->fetch();
+          }
+
+
+
 
 }
 

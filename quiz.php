@@ -19,6 +19,8 @@ class quiz extends adb {
         return $this->query($str_query);
     }
 
+// insert into mwc_quizzine_quiz q, mwc_quizzine_categories c set quiz_id='$quiz', teacher_id='$teacher', category_name='$category'
+
     /**
      * description: The add_parent function adds a parent record
      * @param varchar $category the parent's username for login
@@ -43,6 +45,18 @@ class quiz extends adb {
             return $this->fetch();
         }
 
+
+        /**
+         * description: The add_parent function adds a parent record
+         * @param varchar $category the parent's username for login
+         */
+          function get_quizzes_by_category_teacher($category, $teacher){
+            $str_query="select * from mwc_quizzine_quiz where category_id='$category' and teacher_id='$teacher'";
+              if(!$this->query($str_query)){
+                  return false;
+              }
+              return $this->fetch();
+          }
 
       /**
        * description: The add_parent function adds a parent record
