@@ -459,13 +459,35 @@ function getcategories() {
 }
 
 function getstudents() {
-  var categorystring = "";
-  categorystring += "<a href='#' class='list-group-item'>";
-  categorystring += "<h4 class='list-group-item-heading'>Araba Wilson</h4>";
-  categorystring += "<p class='list-group-item-text'>Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>";
-  categorystring += "</a>";
+  var theUrl = "../response.php?cmd=22&teacher=" + currentuser;
+  var obj = sendRequest(theUrl); //send request to the above url
+  if (obj.result == 1) { //check result
 
-  $("#listdiv").html(categorystring);
+    var categorystring;
+
+    categorystring = "";
+    for (var i = 0; i < obj.students.length; i++) {
+      console.log(obj.students[i].student_id);
+      var student = obj.students[i].student_id;
+      var feedback = obj.students[i].feedback;
+      if (feedback == ""){feedback="No feedback yet. Send Student Updates.";}
+
+      categorystring += "<a href='#' class='list-group-item'>";
+      categorystring += "<h4 class='list-group-item-heading'>"+student+"</h4>";
+      categorystring += "<p class='list-group-item-text'>"+feedback+"</p>";
+      categorystring += "</a>";
+
+    }
+
+    $("#listdiv").html(categorystring);
+    window.plugins.toast.showLongBottom('Students', function(a){console.log('toast success: ' + a)}, function(b){alert('toast error: ' + b)});
+
+    // $("#simulateClick").trigger("click");
+  } else {
+    //show error message
+    // shownotification("error: couldn't fetch categories"); //err
+    window.plugins.toast.showLongBottom('Unable To Fetch Students', function(a){console.log('toast success: ' + a)}, function(b){alert('toast error: ' + b)});
+  }
 }
 
 function getquiz(quiz) {
