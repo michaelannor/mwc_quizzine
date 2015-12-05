@@ -459,7 +459,7 @@ function getcategories() {
 }
 
 function getstudents() {
-  var theUrl = "../response.php?cmd=22&teacher=" + currentuser;
+  var theUrl = "http://cs.ashesi.edu.gh/class2016/michael-annor/mwcfinal/response.php?cmd=22&teacher=" + currentuser;
   var obj = sendRequest(theUrl); //send request to the above url
   if (obj.result == 1) { //check result
 
