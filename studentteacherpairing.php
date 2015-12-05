@@ -24,7 +24,7 @@ class stp extends adb {
      * description: The add_parent function adds a parent record
      */
       function get_students_by_teacher($teacher){
-        $str_query="select student_id from mwc_quizzine_student_teacher where teacher_id='$teacher'";
+        $str_query="select student_id, feedback from mwc_quizzine_student_teacher where teacher_id='$teacher'";
           if(!$this->query($str_query)){
               return false;
           }
