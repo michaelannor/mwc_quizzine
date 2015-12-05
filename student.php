@@ -22,6 +22,30 @@ class student extends adb {
         return $this->query($str_query);
     }
 
+    function get_parent($username){
+      $str_query="select mwc_quizzine_student.parent, mwc_quizzine_parent.username, mwc_quizzine_parent.phone_number
+       from mwc_quizzine_student, mwc_quizzine_parent where mwc_quizzine_student.username='$username'";
+        if(!$this->query($str_query)){
+            return false;
+        }
+        return $this->fetch();
+    }
+
+    function get_students_by_parent($parent){
+      $str_query="select username from mwc_quizzine_student where parent='$parent'";
+        if(!$this->query($str_query)){
+            return false;
+        }
+        return $this->fetch();
+    }
+
+    function get_parent_phone_by_student($student){
+      $str_query="select mwc_quizzine_parent.phone_number from mwc_quizzine_student, mwc_quizzine_parent where mwc_quizzine_student.username='$student'";
+        if(!$this->query($str_query)){
+            return false;
+        }
+        return $this->fetch();
+    }
 
 }
 
