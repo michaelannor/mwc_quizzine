@@ -459,7 +459,7 @@ function getcategories() {
 }
 
 function getstudents() {
-  var theUrl = "http://cs.ashesi.edu.gh/class2016/michael-annor/mwcfinal/response.php?cmd=22&teacher=" + currentuser;
+  var theUrl = "../response.php?cmd=22&teacher=" + currentuser;
   var obj = sendRequest(theUrl); //send request to the above url
   if (obj.result == 1) { //check result
 
@@ -480,13 +480,12 @@ function getstudents() {
     }
 
     $("#listdiv").html(categorystring);
-    window.plugins.toast.showLongBottom('Students', function(a){console.log('toast success: ' + a)}, function(b){alert('toast error: ' + b)});
 
     // $("#simulateClick").trigger("click");
   } else {
     //show error message
     // shownotification("error: couldn't fetch categories"); //err
-    window.plugins.toast.showLongBottom('Unable To Fetch Students', function(a){console.log('toast success: ' + a)}, function(b){alert('toast error: ' + b)});
+    window.plugins.toast.showLongBottom('Unable To Fetch Quizzes', function(a){console.log('toast success: ' + a)}, function(b){alert('toast error: ' + b)});
   }
 }
 
