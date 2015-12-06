@@ -42,6 +42,17 @@ class stp extends adb {
             return $this->fetch();
         }
 
+        /**
+         * description: The add_parent function adds a parent record
+         */
+          function get_teachers(){
+            $str_query="select username, phone from mwc_quizzine_teacher";
+              if(!$this->query($str_query)){
+                  return false;
+              }
+              return $this->fetch();
+          }
+
       /**
        * description: The add_parent function adds a parent record
        */

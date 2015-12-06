@@ -90,6 +90,15 @@
       login_teacher_cmd();
       # code...
       break;
+    case 28:
+      get_teachers_cmd();
+      # code...
+      break;
+    case 29:
+      login_parent_cmd();
+      # code...
+      break;
+      // break;
     default:
       # code...
       break;
@@ -607,6 +616,53 @@ function add_parent_cmd(){
 
     // $row = ;
     if($obj->login_teacher($username, $password)){
+      $row = $obj->fetch();
+      // echos $row;
+      if ($row['username'] == false){
+        echo '{"result":0,"message": "wrong login credentials."}';
+      }else if ($row['username'] == true) {
+        //generate the JSON message to echo to the browser
+          echo '{"result":1,"username":';	//start of json object
+          echo json_encode($row['username']);			//convert the result array to json object
+          echo "}";							//end of json array and object
+      }
+
+    }
+  }
+  // cmd28
+  function get_teachers_cmd(){
+    // $student=$_REQUEST['student'];
+    include ("studentteacherpairing.php");
+    $obj = new stp();
+
+    $row = $obj->get_teachers();
+    if ($row){
+    //return a JSON string to browser when request comes to get description
+    //generate the JSON message to echo to the browser
+      echo '{"result":1,"teachers":[';	//start of json object
+      while($row){
+      echo json_encode($row);			//convert the result array to json object
+      $row=$obj->fetch();
+      if ($row){
+        echo ",";
+      }
+    }
+      echo "]}";							//end of json array and object
+    }
+    else{
+      echo '{"result":0,"message": "teachers not got."}';
+    }
+  }
+
+  //cmd29
+  function login_parent_cmd(){
+    $username=$_REQUEST['username'];
+    $password=$_REQUEST['password'];
+    include ("parent.php");
+    $obj = new parents();
+
+    // $row = ;
+    if($obj->login_parent($username, $password)){
       $row = $obj->fetch();
       // echos $row;
       if ($row['username'] == false){
